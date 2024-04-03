@@ -26,6 +26,21 @@ class CoinGeckoConfig:
 
 
 @ts.settings
+class AmnisConfig:
+    # How often to poll Amnis for price information
+    update_interval_secs: int
+    # The confidence interval rate (to the price) in basis points to use for Amnis updates
+    confidence_ratio_bps: int
+    # node url
+    node_url: str
+
+    http_endpoint: str
+    ws_endpoint: str
+    first_mapping: str
+    program_key: str
+
+
+@ts.settings
 class PythReplicatorConfig:
     http_endpoint: str
     ws_endpoint: str
@@ -51,4 +66,5 @@ class Config:
     health_check_threshold_secs: int
     product_update_interval_secs: int = ts.option(default=60)
     coin_gecko: Optional[CoinGeckoConfig] = ts.option(default=None)
+    amnis: Optional[AmnisConfig] = ts.option(default=None)
     pyth_replicator: Optional[PythReplicatorConfig] = ts.option(default=None)

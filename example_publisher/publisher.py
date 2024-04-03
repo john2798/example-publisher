@@ -4,6 +4,7 @@ from typing import Dict, List, Optional
 from attr import define
 from structlog import get_logger
 from example_publisher.provider import Provider
+from example_publisher.providers.amnis import Amnis
 from example_publisher.providers.coin_gecko import CoinGecko
 from example_publisher.config import Config
 from example_publisher.providers.pyth_replicator import PythReplicator
@@ -42,6 +43,11 @@ class Publisher:
             and config.pyth_replicator is not None
         ):
             self.provider: Provider = PythReplicator(config.pyth_replicator)
+        elif (
+            self.config.provider_engine == "amnis"
+            and config.amnis is not None
+        ):
+            self.provider: Provider = Amnis(config.amnis)
         else:
             raise ValueError(
                 f"Unknown provider {self.config.provider_engine}, possibly the env variables are not set."
